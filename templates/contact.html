@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-5">
+    <!-- Heading -->
+    <div class="text-center mb-5" data-aos="fade-down">
+        <h2 class="fw-bold text-primary display-5">Get in Touch</h2>
+        <p class="text-muted fs-5">We’d love to hear from you! Whether you have a question about products, pricing, or anything else, our team is ready to answer.</p>
+        <hr class="w-25 mx-auto text-primary opacity-75">
+    </div>
+
+    <!-- Contact Info and Image -->
+    <div class="row align-items-center g-5">
+        <div class="col-lg-6" data-aos="fade-right">
+            <img src="{{ url_for('static', filename='images/office.png') }}" alt="Contact Us" class="img-fluid rounded-4 shadow">
+        </div>
+        <div class="col-lg-6" data-aos="fade-left">
+            <div class="bg-light p-4 rounded shadow-sm">
+                <h4 class="text-primary mb-3"><i class="bi bi-geo-alt-fill me-2"></i>Visit Our Office</h4>
+                <p class="mb-3 fs-5">SPS Blue Metals, <br>123 Quarry Road, <br>Namakkal, Tamil Nadu – 637001</p>
+
+                <h4 class="text-primary mb-3"><i class="bi bi-envelope-fill me-2"></i>Email Us</h4>
+                <p class="mb-3 fs-5"><a href="mailto:spsbluemetals@example.com" class="text-decoration-none text-dark">spsbluemetals@example.com</a></p>
+
+                <h4 class="text-primary mb-3"><i class="bi bi-telephone-fill me-2"></i>Call Us</h4>
+                <p class="fs-5">+91 98765 43210</p>
+
+                <h4 class="text-primary mt-4 mb-3"><i class="bi bi-clock-fill me-2"></i>Working Hours</h4>
+                <p class="fs-5">Mon – Sat: 9:00 AM – 6:00 PM<br>Sun: Closed</p>
+
+                <h4 class="text-primary mt-4 mb-3"><i class="bi bi-share-fill me-2"></i>Follow Us</h4>
+                <div class="d-flex gap-3 fs-4">
+                    <a href="#" class="text-primary"><i class="bi bi-facebook"></i></a>
+                    <a href="#" class="text-info"><i class="bi bi-twitter"></i></a>
+                    <a href="#" class="text-danger"><i class="bi bi-instagram"></i></a>
+                    <a href="#" class="text-dark"><i class="bi bi-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Google Maps Embed -->
+    <div class="mt-5" data-aos="fade-up">
+        <h4 class="text-center text-primary mb-4">Our Location</h4>
+        <div class="ratio ratio-16x9 rounded shadow">
+            <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3914.678580340386!2d78.04930619999999!3d11.365015600000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3babdb8f3374d98f%3A0xf2a49e4c520b4126!2sSPS%20BLUE%20METALS!5e0!3m2!1sen!2sin!4v1713960360000!5m2!1sen!2sin" 
+                width="600" 
+                height="450" 
+                style="border:0;" 
+                allowfullscreen="" 
+                loading="lazy" 
+                referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+        </div>
+        
+        
+    </div>
+
+    <!-- Optional CTA -->
+    <div class="text-center mt-5" data-aos="zoom-in">
+        <h5 class="text-secondary">Need assistance with your order or have a question?</h5>
+        <a href="/" class="btn btn-outline-primary btn-lg mt-3 px-5">Go to Home</a>
+    </div>
+</div>
+{% endblock %}

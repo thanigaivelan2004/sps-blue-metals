@@ -1,0 +1,155 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
+    .full-width-page {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+    }
+    .admin-header {
+        padding: 20px;
+        background-color: #fff;
+        border-bottom: 2px solid #dee2e6;
+        text-align: center;
+    }
+    .search-bar {
+        padding: 15px 30px;
+        background-color: #fff;
+        border-bottom: 1px solid #ddd;
+    }
+    .orders-table-container {
+        padding: 20px 30px;
+        width: 100%;
+    }
+    .card {
+        border: none;
+        border-radius: 12px;
+    }
+    .table thead th {
+        position: sticky;
+        top: 0;
+        background-color: #343a40;
+        color: white;
+        z-index: 10;
+    }
+</style>
+
+<div class="full-width-page">
+    <div class="admin-header">
+        <h2 class="fw-bold text-primary">All Orders</h2>
+    </div>
+
+    <div class="search-bar row g-3">
+        <div class="col-md-4">
+            <input type="text" id="orderSearch" class="form-control form-control-lg shadow-sm" placeholder="🔍 Search by Customer Name, Phone, or Product...">
+        </div>
+        <form method="GET" class="col-md-8 row g-2">
+            <div class="col-md-4">
+                <select name="year" class="form-select">
+                    <option value="">All Years</option>
+                    {% for y in years %}
+                        <option value="{{ y }}" {% if y == selected_year %}selected{% endif %}>{{ y }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-4">
+                <select name="month" class="form-select">
+                    <option value="">All Months</option>
+                    {% for m in months %}
+                        <option value="{{ m }}" {% if m == selected_month %}selected{% endif %}>{{ m }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-4 d-flex">
+                <button type="submit" class="btn btn-primary me-2 w-100">Filter</button>
+                <a href="/admin" class="btn btn-secondary w-100">Clear</a>
+            </div>
+        </form>
+    </div>
+
+    <div class="orders-table-container">
+        <div class="card shadow-lg">
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover align-middle mb-0" id="ordersTable">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Customer Name</th>
+                                <th>Address</th>
+                                <th>Phone</th>
+                                <th>Products Ordered</th>
+                                <th>Total (₹)</th>
+                                <th>Order Time</th>
+                                <th>Payment Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for order in orders %}
+                            <tr>
+                                <td class="fw-semibold text-primary">{{ order[0] }}</td>
+                                <td>{{ order[1] }}</td>
+                                <td>{{ order[2] }}</td>
+                                <td>{{ order[3] }}</td>
+                                <td>
+                                    <ul class="mb-0 ps-3">
+                                        {% for product, quantity in order_items.get(order[0], []) %}
+                                        <li>{{ product }} - {{ quantity }} units</li>
+                                        {% endfor %}
+                                    </ul>
+                                </td>
+                                <td>₹{{ order[4] }}</td>
+                                <td>{{ order[5] }}</td>
+                                <td>
+                                    <span class="badge {% if order[6] == 'Paid' %}bg-success{% else %}bg-danger{% endif %} px-3 py-2">
+                                        {{ order[6] }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <form action="/admin-update-payment-status/{{ order[0] }}" method="POST" class="d-flex flex-column gap-2">
+                                        <select name="payment_status" class="form-select form-select-sm">
+                                            <option value="Paid" {% if order[6] == 'Paid' %}selected{% endif %}>Paid</option>
+                                            <option value="Not Paid" {% if order[6] == 'Not Paid' %}selected{% endif %}>Not Paid</option>
+                                        </select>
+                                        <button type="submit" class="btn btn-sm btn-outline-primary">Update</button>
+                                    </form>
+                                    <a href="/admin-delete-order/{{ order[0] }}" class="btn btn-sm btn-outline-danger mt-2 w-100">Delete</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.getElementById("orderSearch").addEventListener("keyup", function () {
+    const searchText = this.value.toLowerCase();
+    const rows = document.querySelectorAll("#ordersTable tbody tr");
+
+    rows.forEach(row => {
+        const rowText = row.textContent.toLowerCase();
+        if (rowText.includes(searchText)) {
+            row.style.display = "";
+            row.classList.add("highlight");
+        } else {
+            row.style.display = "none";
+            row.classList.remove("highlight");
+        }
+    });
+});
+</script>
+
+<style>
+.highlight {
+    background-color: #f0f8ff;
+}
+</style>
+{% endblock %}

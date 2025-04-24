@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container py-5">
+    <!-- Page Header -->
+    <div class="text-center mb-5" data-aos="fade-down">
+        <h2 class="fw-bold text-primary display-5">About <span class="text-dark">SPS Blue Metals</span></h2>
+        <p class="text-muted fs-5">Delivering quality and reliability in construction materials since day one</p>
+        <hr class="w-25 mx-auto text-primary opacity-75">
+    </div>
+
+    <!-- About Section -->
+    <div class="row align-items-center mb-5">
+        <div class="col-lg-6 mb-4 mb-lg-0" data-aos="fade-right">
+            <img src="{{ url_for('static', filename='images/crusher.jpg') }}" alt="Crusher"
+                 class="img-fluid rounded-4 shadow" style="object-fit: cover; height: 100%; width: 100%;">
+        </div>
+        <div class="col-lg-6" data-aos="fade-left">
+            <p class="fs-5 text-dark">
+                <strong>SPS Blue Metals</strong> has been a cornerstone in the construction sector for over a decade. We are committed to providing premium blue metal aggregates with a focus on quality, punctuality, and customer-first service.
+            </p>
+            <div class="row g-3 pt-2">
+                <div class="col-6" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="bg-light p-3 rounded d-flex align-items-center shadow-sm">
+                        <i class="bi bi-check-circle-fill text-success fs-3 me-3"></i>
+                        <span class="fw-semibold">Top-grade Materials</span>
+                    </div>
+                </div>
+                <div class="col-6" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="bg-light p-3 rounded d-flex align-items-center shadow-sm">
+                        <i class="bi bi-truck text-primary fs-3 me-3"></i>
+                        <span class="fw-semibold">Timely Delivery</span>
+                    </div>
+                </div>
+                <div class="col-6" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="bg-light p-3 rounded d-flex align-items-center shadow-sm">
+                        <i class="bi bi-currency-rupee text-warning fs-3 me-3"></i>
+                        <span class="fw-semibold">Fair Pricing</span>
+                    </div>
+                </div>
+                <div class="col-6" data-aos="zoom-in" data-aos-delay="400">
+                    <div class="bg-light p-3 rounded d-flex align-items-center shadow-sm">
+                        <i class="bi bi-person-check text-info fs-3 me-3"></i>
+                        <span class="fw-semibold">Expert Team</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Services Section -->
+    <div class="text-center mb-5" data-aos="fade-up">
+        <h4 class="text-secondary mb-4 fw-bold">Our Core Services</h4>
+        <div class="row g-4">
+            <!-- Card 1 -->
+            <div class="col-md-4" data-aos="flip-left" data-aos-delay="100">
+                <div class="card h-100 shadow border-0 rounded-4">
+                    <img src="{{ url_for('static', filename='images/quarry.jpeg') }}" class="card-img-top rounded-top-4"
+                         style="height: 220px; object-fit: cover;" alt="Quarry">
+                    <div class="card-body text-center">
+                        <h5 class="card-title text-primary fw-bold">Modern Quarry</h5>
+                        <p class="card-text text-muted">State-of-the-art machinery ensures precision in stone crushing and segregation.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="col-md-4" data-aos="flip-up" data-aos-delay="200">
+                <div class="card h-100 shadow border-0 rounded-4">
+                    <img src="{{ url_for('static', filename='images/lorry.jpg') }}" class="card-img-top rounded-top-4"
+                         style="height: 220px; object-fit: cover;" alt="Logistics">
+                    <div class="card-body text-center">
+                        <h5 class="card-title text-primary fw-bold">Efficient Logistics</h5>
+                        <p class="card-text text-muted">Fast and secure delivery to construction sites—on time, every time.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="col-md-4" data-aos="flip-right" data-aos-delay="300">
+                <div class="card h-100 shadow border-0 rounded-4">
+                    <img src="{{ url_for('static', filename='images/kalljpeg.jpeg') }}" class="card-img-top rounded-top-4"
+                         style="height: 220px; object-fit: cover;" alt="Quality Control">
+                    <div class="card-body text-center">
+                        <h5 class="card-title text-primary fw-bold">Quality Assurance</h5>
+                        <p class="card-text text-muted">Every product undergoes strict quality checks before dispatch.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Prominent Builders -->
+    <div class="text-center my-5" data-aos="fade-up">
+        <h4 class="text-secondary mb-4 fw-bold">Our Prominent Builders</h4>
+        <p class="text-muted mb-4">We’re trusted by some of the top builders in the region who rely on us for quality and consistency.</p>
+        <div class="row justify-content-center g-4">
+            <!-- Builder 1 -->
+            <div class="col-6 col-sm-4 col-md-3" data-aos="zoom-in" data-aos-delay="100">
+                <div class="bg-white rounded-4 p-3 shadow-sm h-100 d-flex align-items-center justify-content-center">
+                    <img src="{{ url_for('static', filename='images/b3.png') }}" class="img-fluid" alt="Builder 1">
+                </div>
+            </div>
+            <!-- Builder 2 -->
+            <div class="col-6 col-sm-4 col-md-3" data-aos="zoom-in" data-aos-delay="200">
+                <div class="bg-white rounded-4 p-3 shadow-sm h-100 d-flex align-items-center justify-content-center">
+                    <img src="{{ url_for('static', filename='images/b2.jpeg') }}" class="img-fluid" alt="Builder 2">
+                </div>
+            </div>
+            <!-- Builder 3 -->
+            <div class="col-6 col-sm-4 col-md-3" data-aos="zoom-in" data-aos-delay="300">
+                <div class="bg-white rounded-4 p-3 shadow-sm h-100 d-flex align-items-center justify-content-center">
+                    <img src="{{ url_for('static', filename='images/b1.jpeg') }}" class="img-fluid" alt="Builder 3">
+                </div>
+            </div>
+            <!-- Builder 4 -->
+            <div class="col-6 col-sm-4 col-md-3" data-aos="zoom-in" data-aos-delay="400">
+                <div class="bg-white rounded-4 p-3 shadow-sm h-100 d-flex align-items-center justify-content-center">
+                    <img src="{{ url_for('static', filename='images/b4.jpeg') }}" class="img-fluid" alt="Builder 4">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="text-center mt-5" data-aos="fade-up">
+        <h5 class="fw-semibold mb-3 text-secondary">Looking to work with us?</h5>
+        <a href="/contact" class="btn btn-lg btn-primary px-4 shadow">Contact Us</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,408 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container-fluid px-0" style="background: linear-gradient(to right, #e0eafc, #cfdef3); min-height: 100vh;">
+
+    <!-- Hero Section with Parallax Effect -->
+    <div class="parallax-container position-relative d-flex align-items-center justify-content-center" style="height: 60vh; overflow: hidden;">
+        <div class="parallax-bg position-absolute w-100 h-100" style="background-image: url('{{ url_for('static', filename='images/img5.jpg') }}'); background-size: cover; background-position: center; z-index: -1;"></div>
+        <div class="text-center text-white p-4 animate__animated animate__fadeIn">
+            <h1 class="display-3 fw-bold text-shadow text-color:blue">SPS Blue Metals</h1>
+            <p class="lead fs-3 mb-4 text-shadow">Quality Construction Materials Delivered</p>
+            <a href="/order" class="btn btn-lg btn-primary rounded-pill shadow-lg px-5 py-3 fw-bold animate__animated animate__pulse animate__infinite animate__slow">Book Now</a>
+        </div>
+    </div>
+
+    <!-- Carousel -->
+    <div class="container py-5 scroll-reveal">
+        <div id="carouselExampleIndicators" class="carousel slide shadow rounded-4 overflow-hidden" data-bs-ride="carousel" style="max-width: 900px; margin: auto;">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"></button>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"></button>
+            </div>
+            <div class="carousel-inner" style="height: 400px;">
+                <div class="carousel-item active">
+                    <img src="{{ url_for('static', filename='images/img5.jpg') }}" class="d-block w-100 h-100 object-fit-cover" alt="Blue Metal">
+                </div>
+                <div class="carousel-item">
+                    <img src="{{ url_for('static', filename='images/img6.jpeg') }}" class="d-block w-100 h-100 object-fit-cover" alt="Crusher Stone">
+                </div>
+                <div class="carousel-item">
+                    <img src="{{ url_for('static', filename='images/img7.jpg') }}" class="d-block w-100 h-100 object-fit-cover" alt="Stone Load">
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                <span class="carousel-control-next-icon"></span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Welcome Section -->
+    <div class="text-center text-dark mb-5 scroll-reveal">
+        <h2 class="fw-bold display-5">Welcome to SPS Blue Metals Booking</h2>
+        <p class="lead">High-quality blue metals delivered directly to your construction site. Book your order easily online!</p>
+        <a href="/order" class="btn btn-lg btn-primary shadow mt-3">Place Your Order</a>
+    </div>
+
+    <!-- Features with Hover and Scroll Effects -->
+    <div class="container mb-5">
+        <div class="row text-center">
+            <div class="col-md-4 mb-4 scroll-reveal-left">
+                <div class="card h-100 border-0 shadow feature-card">
+                    <div class="card-body">
+                        <div class="feature-icon mb-3">
+                            <i class="fas fa-medal fa-3x text-primary"></i>
+                        </div>
+                        <h5 class="card-title">Best Quality</h5>
+                        <p class="card-text">Sourced from the best quarries, tested for strength and durability. Our blue metals meet all industry standards for construction.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4 scroll-reveal">
+                <div class="card h-100 border-0 shadow feature-card">
+                    <div class="card-body">
+                        <div class="feature-icon mb-3">
+                            <i class="fas fa-truck-loading fa-3x text-primary"></i>
+                        </div>
+                        <h5 class="card-title">Fast Delivery</h5>
+                        <p class="card-text">Prompt and secure delivery to your construction site, every time. Our logistics team ensures timely delivery to keep your project on schedule.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4 scroll-reveal-right">
+                <div class="card h-100 border-0 shadow feature-card">
+                    <div class="card-body">
+                        <div class="feature-icon mb-3">
+                            <i class="fas fa-tags fa-3x text-primary"></i>
+                        </div>
+                        <h5 class="card-title">Affordable Pricing</h5>
+                        <p class="card-text">Just ₹500 per 0.5 unit + ₹1000 delivery charge. No hidden costs! Transparent pricing with bulk order discounts available.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Testimonials Section -->
+    <div class="container py-5 scroll-reveal">
+        <h2 class="text-center mb-5 fw-bold">What Our Customers Say</h2>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 border-0 shadow testimonial-card">
+                    <div class="card-body text-center">
+                        <div class="mb-3">
+                            <i class="fas fa-quote-left fa-2x text-primary opacity-50"></i>
+                        </div>
+                        <p class="card-text">The quality of blue metals from SPS is outstanding. Definitely recommending to all contractors in the area.</p>
+                        <div class="mt-3">
+                            <div class="testimonial-rating text-warning mb-2">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <h6 class="fw-bold mb-0">Pranav Raja</h6>
+                            <small class="text-muted">Project Manager</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 border-0 shadow testimonial-card">
+                    <div class="card-body text-center">
+                        <div class="mb-3">
+                            <i class="fas fa-quote-left fa-2x text-primary opacity-50"></i>
+                        </div>
+                        <p class="card-text">On-time delivery and consistent quality make SPS Blue Metals my go-to supplier for all construction projects.</p>
+                        <div class="mt-3">
+                            <div class="testimonial-rating text-warning mb-2">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <h6 class="fw-bold mb-0">Sudhakaran</h6>
+                            <small class="text-muted">Architect</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 border-0 shadow testimonial-card">
+                    <div class="card-body text-center">
+                        <div class="mb-3">
+                            <i class="fas fa-quote-left fa-2x text-primary opacity-50"></i>
+                        </div>
+                        <p class="card-text">The online booking system is so convenient. Love the transparency in pricing and the reliable service.</p>
+                        <div class="mt-3">
+                            <div class="testimonial-rating text-warning mb-2">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <h6 class="fw-bold mb-0">Thanigaivelan</h6>
+                            <small class="text-muted">Civil Engineer</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Types -->
+    <div class="container py-5 scroll-reveal">
+        <h2 class="text-center mb-5 fw-bold">Our Blue Metal Products</h2>
+        <div class="row">
+            <div class="col-md-3 mb-4">
+                <div class="card product-card border-0 shadow h-100">
+                    <img src="{{ url_for('static', filename='images/img5.jpg') }}" class="card-img-top product-img" alt="20mm Blue Metal" href='/order'>
+                    <div class="card-body text-center">
+                        <h5 class="card-title">20mm Blue Metal</h5>
+                        <p class="card-text">Perfect for concrete work and general construction needs.</p>
+                        <p class="fw-bold">₹500 per 0.5 unit</p>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="card product-card border-0 shadow h-100">
+                    <img src="{{ url_for('static', filename='images/img6.jpeg') }}" class="card-img-top product-img" alt="12mm Blue Metal">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">12mm Blue Metal</h5>
+                        <p class="card-text">Ideal for fine concrete works and specialized applications.</p>
+                        <p class="fw-bold">₹550 per 0.5 unit</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="card product-card border-0 shadow h-100">
+                    <img src="{{ url_for('static', filename='images/img7.jpg') }}" class="card-img-top product-img" alt="40mm Blue Metal">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">40mm Blue Metal</h5>
+                        <p class="card-text">Best for foundation work and heavy-duty construction.</p>
+                        <p class="fw-bold">₹475 per 0.5 unit</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="card product-card border-0 shadow h-100">
+                    <img src="{{ url_for('static', filename='images/img5.jpg') }}" class="card-img-top product-img" alt="M-Sand">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">60mm Blue Metal</h5>
+                        <p class="card-text">High-quality manufactured sand for plastering and brick work.</p>
+                        <p class="fw-bold">₹600 per 0.5 unit</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    <!-- Call to Action -->
+    <div class="container-fluid py-5 cta-section scroll-reveal">
+        <div class="container text-center py-4">
+            <h2 class="display-5 fw-bold text-white mb-4">Ready to Start Your Project?</h2>
+            <p class="lead text-white mb-4">Get quality blue metals delivered to your site in just a few clicks</p>
+            <a href="/order" class="btn btn-light btn-lg px-5 me-2 mb-2 mb-md-0">Book Now</a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="py-5 mt-0" style="background-color: #2d3436;">
+        <div class="container">
+            <div class="row gy-4 text-white">
+                <div class="col-lg-4 col-md-6">
+                    <h5 class="fw-bold mb-3">SPS Blue Metals</h5>
+                    <p class="mb-3">Providing high-quality construction materials since 2010. Your trusted partner for all blue metal needs.</p>
+                    <div class="social-links">
+                        <a href="#" class="text-white me-3"><i class="fab fa-facebook-f fa-lg"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-instagram fa-lg"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-twitter fa-lg"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-whatsapp fa-lg"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6">
+                    <h5 class="fw-bold mb-3">Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="/" class="text-white text-decoration-none">Home</a></li>
+                        <li class="mb-2"><a href="/order" class="text-white text-decoration-none">Book Now</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="fw-bold mb-3">Contact Info</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-map-marker-alt me-2"></i> Elachipalayam, Namakkal, TN</li>
+                        <li class="mb-2"><i class="fas fa-phone me-2"></i> +91 9876543210</li>
+                        <li class="mb-2"><i class="fas fa-envelope me-2"></i> info@spsbluemet.com</li>
+                        <li><i class="fas fa-clock me-2"></i> Mon-Sat: 8AM - 6PM</li>
+                    </ul>
+                </div>
+                
+            </div>
+            <hr class="my-4 bg-white">
+            <p class="text-center text-white mb-0">&copy; 2025 SPS Blue Metal Booking | All Rights Reserved</p>
+        </div>
+    </footer>
+</div>
+
+<style>
+    /* Base styles */
+    .object-fit-cover {
+        object-fit: cover;
+    }
+
+    .text-shadow {
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Parallax effect */
+    .parallax-container {
+        position: relative;
+    }
+    
+    /* Scroll animations */
+    .scroll-reveal, .scroll-reveal-left, .scroll-reveal-right {
+        opacity: 0;
+        transition: all 1s ease;
+    }
+    
+    .scroll-reveal.active {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    .scroll-reveal-left.active {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    
+    .scroll-reveal-right.active {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    
+    /* Card effects */
+    .feature-card, .testimonial-card, .product-card {
+        transition: all 0.3s ease;
+        border-radius: 12px;
+        overflow: hidden;
+    }
+    
+    .feature-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.15) !important;
+    }
+    
+    .testimonial-card:hover {
+        transform: scale(1.03);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+    }
+    
+    .product-card:hover {
+        transform: translateY(-5px);
+    }
+    
+    .product-img {
+        height: 200px;
+        object-fit: cover;
+        transition: all 0.5s ease;
+    }
+    
+    .product-card:hover .product-img {
+        transform: scale(1.05);
+    }
+    
+    /* Feature icons */
+    .feature-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background-color: #f8f9fa;
+        margin-bottom: 1rem;
+        transition: all 0.3s ease;
+    }
+    
+    .feature-card:hover .feature-icon {
+        background-color: #e9ecef;
+        transform: rotate(10deg);
+    }
+    
+    /* CTA Section */
+    .cta-section {
+        background: linear-gradient(rgba(13, 110, 253, 0.8), rgba(13, 110, 253, 0.9)), url('{{ url_for('static', filename='images/img7.jpg') }}');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+    }
+    
+    /* Initial scroll position for animations */
+    .scroll-reveal {
+        transform: translateY(50px);
+    }
+    
+    .scroll-reveal-left {
+        transform: translateX(-50px);
+    }
+    
+    .scroll-reveal-right {
+        transform: translateX(50px);
+    }
+</style>
+
+<!-- Add Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<!-- Add Animation CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
+<!-- Add scroll animation JavaScript -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Parallax effect
+        window.addEventListener('scroll', function() {
+            const parallaxBg = document.querySelector('.parallax-bg');
+            if (parallaxBg) {
+                const scrollPosition = window.pageYOffset;
+                parallaxBg.style.transform = 'translateY(' + scrollPosition * 0.5 + 'px)';
+            }
+        });
+        
+        // Scroll reveal animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all elements with scroll reveal classes
+        document.querySelectorAll('.scroll-reveal, .scroll-reveal-left, .scroll-reveal-right').forEach(el => {
+            observer.observe(el);
+        });
+        
+        // Initialize carousel
+        var carousel = document.querySelector('#carouselExampleIndicators');
+        if (carousel) {
+            new bootstrap.Carousel(carousel, {
+                interval: 3000
+            });
+        }
+    });
+</script>
+{% endblock %}

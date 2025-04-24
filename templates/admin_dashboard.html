@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    .dashboard-card {
+        border-radius: 15px;
+        transition: transform 0.2s ease-in-out;
+    }
+
+    .dashboard-card:hover {
+        transform: scale(1.02);
+    }
+
+    .icon-wrapper {
+        font-size: 2rem;
+        padding: 15px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .icon-blue { background-color: #e0f0ff; color: #007bff; }
+    .icon-green { background-color: #e6ffed; color: #28a745; }
+    .icon-red { background-color: #ffe6e6; color: #dc3545; }
+
+    .unpaid-list {
+        max-height: 300px;
+        overflow-y: auto;
+    }
+
+    .section-header {
+        border-bottom: 2px solid #dee2e6;
+        padding-bottom: 10px;
+        margin-bottom: 15px;
+    }
+</style>
+
+<div class="container py-5">
+    <h2 class="mb-4 fw-bold text-primary text-center">Admin Dashboard</h2>
+
+    <!-- Summary Cards -->
+    <div class="row g-4 mb-5">
+        <div class="col-md-4">
+            <div class="card dashboard-card shadow-sm border-primary border-2">
+                <div class="card-body d-flex align-items-center">
+                    <div class="icon-wrapper icon-blue me-3">
+                        <i class="bi bi-bag-check"></i>
+                    </div>
+                    <div>
+                        <h5 class="card-title text-primary mb-1">Orders This Month</h5>
+                        <h4 class="fw-bold">{{ order_count }}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card dashboard-card shadow-sm border-success border-2">
+                <div class="card-body d-flex align-items-center">
+                    <div class="icon-wrapper icon-green me-3">
+                        <i class="bi bi-currency-rupee"></i>
+                    </div>
+                    <div>
+                        <h5 class="card-title text-success mb-1">Total Received</h5>
+                        <h4 class="fw-bold">₹{{ total_received }}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card dashboard-card shadow-sm border-danger border-2">
+                <div class="card-body d-flex align-items-center">
+                    <div class="icon-wrapper icon-red me-3">
+                        <i class="bi bi-exclamation-circle"></i>
+                    </div>
+                    <div>
+                        <h5 class="card-title text-danger mb-1">Total Not Received</h5>
+                        <h4 class="fw-bold">₹{{ total_not_received }}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Unpaid Orders Section -->
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <div class="section-header">
+                <h5 class="fw-bold text-danger"><i class="bi bi-x-circle me-2"></i>Customers Who Have Not Paid</h5>
+            </div>
+            {% if unpaid_orders %}
+                <div class="unpaid-list">
+                    <table class="table table-hover table-bordered align-middle">
+                        <thead class="table-danger text-center">
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Customer Name</th>
+                                <th>Phone</th>
+                                <th>Total (₹)</th>
+                                <th>Order Time</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for order in unpaid_orders %}
+                            <tr>
+                                <td>{{ order[0] }}</td>
+                                <td>{{ order[1] }}</td>
+                                <td>{{ order[3] }}</td>
+                                <td>₹{{ order[4] }}</td>
+                                <td>{{ order[5] }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <p class="text-muted">🎉 All orders are paid!</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
