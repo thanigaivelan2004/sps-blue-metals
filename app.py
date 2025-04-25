@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, flash, session
+from flask import Flask, render_template, request, redirect, flash, session, url_for
 import sqlite3
 from datetime import datetime
 from functools import wraps
@@ -71,19 +71,33 @@ def user_login_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
+# Authentication check decorator for general pages
+def auth_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if not session.get('user_logged_in') and not session.get('admin_logged_in'):
+            flash('Please login to access this page.', 'warning')
+            return redirect('/login')
+        return f(*args, **kwargs)
+    return decorated_function
+
 @app.route('/')
+@auth_required
 def home():
     return render_template('home.html')
 
 @app.route('/about')
+@auth_required
 def about():
     return render_template('about.html')
 
 @app.route('/products')
+@auth_required
 def products():
     return render_template('products.html')
 
 @app.route('/contact', methods=['GET', 'POST'])
+@auth_required
 def contact():
     if request.method == 'POST':
         name = request.form['name']
@@ -94,6 +108,7 @@ def contact():
     return render_template('contact.html')
 
 @app.route('/order', methods=['GET', 'POST'])
+@auth_required
 def order():
     if request.method == 'POST':
         name = request.form['name']
@@ -147,6 +162,12 @@ def order():
 # User Authentication Routes
 @app.route('/login', methods=['GET', 'POST'])
 def user_login():
+    # Redirect if already logged in
+    if session.get('user_logged_in'):
+        return redirect('/')
+    if session.get('admin_logged_in'):
+        return redirect('/admin')
+        
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
@@ -166,10 +187,17 @@ def user_login():
         else:
             flash('Invalid credentials', 'danger')
     
+    # Use the standalone login template without navigation
     return render_template('login.html')
 
 @app.route('/register', methods=['GET', 'POST'])
 def user_register():
+    # Redirect if already logged in
+    if session.get('user_logged_in'):
+        return redirect('/')
+    if session.get('admin_logged_in'):
+        return redirect('/admin')
+        
     if request.method == 'POST':
         username = request.form['username']
         email = request.form['email']
@@ -194,7 +222,8 @@ def user_register():
         finally:
             conn.close()
     
-    return render_template('register.html')
+    # Use the standalone register template without navigation
+    return render_template('register_page.html')
 
 @app.route('/logout')
 def user_logout():
@@ -202,7 +231,7 @@ def user_logout():
     session.pop('user_id', None)
     session.pop('username', None)
     flash('Logged out successfully.', 'info')
-    return redirect('/')
+    return redirect('/login')
 
 @app.route('/user-dashboard')
 @user_login_required
@@ -269,6 +298,27 @@ def view_order_details(order_id):
     return render_template('order_details.html', order=order, items=items)
 
 # Admin Routes
+@app.route('/admin-login', methods=['GET', 'POST'])
+def admin_login():
+    # Redirect if already logged in
+    if session.get('admin_logged_in'):
+        return redirect('/admin')
+    if session.get('user_logged_in'):
+        return redirect('/')
+        
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        if username == ADMIN_USERNAME and password == ADMIN_PASSWORD:
+            session['admin_logged_in'] = True
+            flash('Logged in successfully!', 'success')
+            return redirect('/admin')
+        else:
+            flash('Invalid credentials', 'danger')
+    
+    # Use the standalone admin login template without navigation
+    return render_template('admin_login.html')
+
 @app.route('/admin-dashboard')
 @login_required
 def admin_dashboard():
@@ -391,24 +441,11 @@ def admin():
     conn.close()
     return render_template('admin.html', orders=orders, order_items=order_items, years=years, months=months, selected_year=year, selected_month=month)
 
-@app.route('/admin-login', methods=['GET', 'POST'])
-def admin_login():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-        if username == ADMIN_USERNAME and password == ADMIN_PASSWORD:
-            session['admin_logged_in'] = True
-            flash('Logged in successfully!', 'success')
-            return redirect('/admin')
-        else:
-            flash('Invalid credentials', 'danger')
-    return render_template('admin_login.html')
-
 @app.route('/admin-logout')
 def admin_logout():
     session.pop('admin_logged_in', None)
     flash('Logged out successfully.', 'info')
-    return redirect('/')
+    return redirect('/login')
 
 if __name__ == '__main__':
     init_db()
