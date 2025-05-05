@@ -20,6 +20,7 @@ def init_db():
             total_price REAL,
             timestamp TEXT,
             payment_status TEXT DEFAULT 'Not Paid',
+            order_status TEXT DEFAULT 'Ordered',
             user_id INTEGER
         )
     ''')
@@ -142,8 +143,8 @@ def order():
 
         conn = sqlite3.connect('orders.db')
         c = conn.cursor()
-        c.execute("INSERT INTO orders (name, address, phone, total_price, timestamp, user_id) VALUES (?, ?, ?, ?, ?, ?)",
-                  (name, address, phone, total_price, timestamp, user_id))
+        c.execute("INSERT INTO orders (name, address, phone, total_price, timestamp, user_id, order_status) VALUES (?, ?, ?, ?, ?, ?, ?)",
+                  (name, address, phone, total_price, timestamp, user_id, 'Ordered'))
 
         order_id = c.lastrowid
 
@@ -263,6 +264,11 @@ def user_dashboard():
     paid_orders = len([order for order in user_orders if order[6] == 'Paid'])
     unpaid_orders = len(user_orders) - paid_orders
     
+    # Count orders by status
+    ordered_count = len([order for order in user_orders if order[7] == 'Ordered'])
+    shipped_count = len([order for order in user_orders if order[7] == 'Shipped'])
+    delivered_count = len([order for order in user_orders if order[7] == 'Delivered'])
+    
     conn.close()
     
     return render_template('user_dashboard.html', 
@@ -270,7 +276,10 @@ def user_dashboard():
                           user_orders=user_orders,
                           order_items=order_items,
                           paid_orders=paid_orders,
-                          unpaid_orders=unpaid_orders)
+                          unpaid_orders=unpaid_orders,
+                          ordered_count=ordered_count,
+                          shipped_count=shipped_count,
+                          delivered_count=delivered_count)
 
 @app.route('/view-order/<int:order_id>')
 @user_login_required
@@ -338,6 +347,16 @@ def admin_dashboard():
     # Fetch unpaid orders
     cur.execute("SELECT * FROM orders WHERE payment_status = 'Not Paid'")
     unpaid_orders = cur.fetchall()
+    
+    # Count orders by status
+    cur.execute("SELECT COUNT(*) FROM orders WHERE order_status = 'Ordered'")
+    ordered_count = cur.fetchone()[0] or 0
+    
+    cur.execute("SELECT COUNT(*) FROM orders WHERE order_status = 'Shipped'")
+    shipped_count = cur.fetchone()[0] or 0
+    
+    cur.execute("SELECT COUNT(*) FROM orders WHERE order_status = 'Delivered'")
+    delivered_count = cur.fetchone()[0] or 0
 
     conn.close()
 
@@ -346,7 +365,10 @@ def admin_dashboard():
         order_count=order_count,
         total_received=total_received,
         total_not_received=total_not_received,
-        unpaid_orders=unpaid_orders
+        unpaid_orders=unpaid_orders,
+        ordered_count=ordered_count,
+        shipped_count=shipped_count,
+        delivered_count=delivered_count
     )
 
 @app.route('/admin-delete-order/<int:order_id>')
@@ -393,6 +415,37 @@ def admin_update_payment_status(order_id):
     except Exception as e:
         conn.rollback()
         flash(f'Error updating payment status: {str(e)}', 'danger')
+    finally:
+        conn.close()
+
+    return redirect('/admin')
+
+@app.route('/admin-update-order-status/<int:order_id>', methods=['POST'])
+@login_required
+def admin_update_order_status(order_id):
+    # Ensure that the 'order_status' field exists in the form
+    order_status = request.form.get('order_status')
+    
+    # Check if the order status is valid
+    if order_status not in ['Ordered', 'Shipped', 'Delivered']:
+        flash('Invalid order status', 'danger')
+        return redirect('/admin')
+    
+    conn = sqlite3.connect('orders.db')
+    c = conn.cursor()
+
+    # Update the order status in the database
+    try:
+        c.execute("UPDATE orders SET order_status = ? WHERE id = ?", (order_status, order_id))
+        conn.commit()
+
+        if c.rowcount == 0:
+            flash('Order not found or order status already updated.', 'warning')
+        else:
+            flash(f'Order status for Order {order_id} updated to {order_status}!', 'success')
+    except Exception as e:
+        conn.rollback()
+        flash(f'Error updating order status: {str(e)}', 'danger')
     finally:
         conn.close()
 

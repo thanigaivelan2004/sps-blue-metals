@@ -63,6 +63,7 @@
                                 </thead>
                                 <tbody>
                                     {% for order in user_orders %}
+                                    <p>
                                         <tr>
                                             <td>#{{ order[0] }}</td>
                                             <td>{{ order[5] }}</td>
@@ -81,8 +82,18 @@
                                                     <span class="badge bg-warning">Not Paid</span>
                                                 {% endif %}
                                             </td>
+                                            
                                             <td>
                                                 <a href="{{ url_for('view_order_details', order_id=order[0]) }}" class="btn btn-sm btn-info">View Details</a>
+                                            </td>
+                                            <td>
+                                                {% if order[7] == 'Ordered' %}
+                                                    <span class="badge bg-success">Ordered</span>
+                                                {% elif order[7] == 'Shipped' %}
+                                                    <span class="badge bg-success">Shipped</span>
+                                                {% else %}
+                                                    <span class="badge bg-warning">Delivered</span>
+                                                {% endif %}
                                             </td>
                                         </tr>
                                     {% endfor %}

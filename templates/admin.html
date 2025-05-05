@@ -35,6 +35,23 @@
         color: white;
         z-index: 10;
     }
+    .order-status-badge {
+        padding: 5px 10px;
+        font-weight: 500;
+        border-radius: 15px;
+    }
+    .status-ordered {
+        background-color: #f0ad4e;
+        color: #fff;
+    }
+    .status-shipped {
+        background-color: #5bc0de;
+        color: #fff;
+    }
+    .status-delivered {
+        background-color: #5cb85c;
+        color: #fff;
+    }
 </style>
 
 <div class="full-width-page">
@@ -85,6 +102,7 @@
                                 <th>Total (₹)</th>
                                 <th>Order Time</th>
                                 <th>Payment Status</th>
+                                <th>Order Status</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -110,14 +128,37 @@
                                     </span>
                                 </td>
                                 <td>
-                                    <form action="/admin-update-payment-status/{{ order[0] }}" method="POST" class="d-flex flex-column gap-2">
-                                        <select name="payment_status" class="form-select form-select-sm">
-                                            <option value="Paid" {% if order[6] == 'Paid' %}selected{% endif %}>Paid</option>
-                                            <option value="Not Paid" {% if order[6] == 'Not Paid' %}selected{% endif %}>Not Paid</option>
-                                        </select>
-                                        <button type="submit" class="btn btn-sm btn-outline-primary">Update</button>
-                                    </form>
-                                    <a href="/admin-delete-order/{{ order[0] }}" class="btn btn-sm btn-outline-danger mt-2 w-100">Delete</a>
+                                    <span class="order-status-badge {% if order[7] == 'Ordered' %}status-ordered{% elif order[7] == 'Shipped' %}status-shipped{% else %}status-delivered{% endif %}">
+                                        {{ order[7] }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <div class="d-flex flex-column gap-2">
+                                        <!-- Payment Status Form -->
+                                        <form action="/admin-update-payment-status/{{ order[0] }}" method="POST">
+                                            <div class="input-group input-group-sm mb-2">
+                                                <select name="payment_status" class="form-select form-select-sm">
+                                                    <option value="Paid" {% if order[6] == 'Paid' %}selected{% endif %}>Paid</option>
+                                                    <option value="Not Paid" {% if order[6] == 'Not Paid' %}selected{% endif %}>Not Paid</option>
+                                                </select>
+                                                <button type="submit" class="btn btn-sm btn-outline-primary">Update</button>
+                                            </div>
+                                        </form>
+                                        
+                                        <!-- Order Status Form -->
+                                        <form action="/admin-update-order-status/{{ order[0] }}" method="POST">
+                                            <div class="input-group input-group-sm mb-2">
+                                                <select name="order_status" class="form-select form-select-sm">
+                                                    <option value="Ordered" {% if order[7] == 'Ordered' %}selected{% endif %}>Ordered</option>
+                                                    <option value="Shipped" {% if order[7] == 'Shipped' %}selected{% endif %}>Shipped</option>
+                                                    <option value="Delivered" {% if order[7] == 'Delivered' %}selected{% endif %}>Delivered</option>
+                                                </select>
+                                                <button type="submit" class="btn btn-sm btn-outline-info">Update</button>
+                                            </div>
+                                        </form>
+                                        
+                                        <a href="/admin-delete-order/{{ order[0] }}" class="btn btn-sm btn-outline-danger mt-1">Delete</a>
+                                    </div>
                                 </td>
                             </tr>
                             {% endfor %}
