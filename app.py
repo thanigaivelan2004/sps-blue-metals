@@ -223,7 +223,7 @@ def user_register():
             conn.close()
     
     # Use the standalone register template without navigation
-    return render_template('register_page.html')
+    return render_template('register.html')
 
 @app.route('/logout')
 def user_logout():
