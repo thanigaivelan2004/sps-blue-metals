@@ -2,10 +2,18 @@
 {% block content %}
 <div class="container my-5">
     <!-- Order Placed Notification (Top Alert) -->
-    <div id="orderNotification" class="alert alert-success text-center fade show"
-         style="display: none; position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1050; width: 100%; max-width: 600px;">
-        <strong>Success!</strong> Your order has been placed successfully.
-    </div>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                {% if category == 'success' and 'order has been placed successfully' in message %}
+                <div id="orderNotification" class="alert alert-success text-center fade show"
+                    style="position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1050; width: 100%; max-width: 600px;">
+                    <strong>Success!</strong> {{ message }}
+                </div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
 
     <div class="card shadow border-0 rounded-lg overflow-hidden">
         <div class="card-header bg-primary text-white p-4">
@@ -226,25 +234,17 @@
         // Initialize totals
         calculateTotal();
         
-        // Check for flash messages
-        const flashMessages = document.querySelectorAll('.alert-success');
-        flashMessages.forEach(message => {
-            if (message.innerText.includes('order has been placed successfully')) {
-                const alertBox = document.getElementById('orderNotification');
-                alertBox.style.display = 'block';
-                alertBox.classList.remove('fade-out');
-                alertBox.style.opacity = '1';
+        // Add auto-hide for flash messages if they exist
+        const orderNotification = document.getElementById('orderNotification');
+        if (orderNotification) {
+            setTimeout(() => {
+                orderNotification.classList.add('fade-out');
+            }, 2500); // Start fade after 2.5 sec
 
-                setTimeout(() => {
-                    alertBox.classList.add('fade-out');
-                }, 2500); // Start fade after 2.5 sec
-
-                setTimeout(() => {
-                    alertBox.style.display = 'none';
-                    alertBox.classList.remove('fade-out');
-                }, 3500); // Hide after fade
-            }
-        });
+            setTimeout(() => {
+                orderNotification.style.display = 'none';
+            }, 3500); // Hide after fade
+        }
     });
 </script>
 {% endblock %}
