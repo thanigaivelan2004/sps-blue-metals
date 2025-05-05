@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request, redirect, flash, session, url_for
 import sqlite3
 from datetime import datetime
+import pytz
+from datetime import datetime
 from functools import wraps
 
 app = Flask(__name__)
@@ -151,7 +153,8 @@ def order():
             return redirect('/order')
 
         total_price = total_product_price + delivery_charge
-        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        tz = pytz.timezone('Asia/Kolkata')
+        timestamp = datetime.now(tz).strftime("%Y-%m-%d %H:%M:%S")
         
         # Get user_id if logged in
         user_id = session.get('user_id')
