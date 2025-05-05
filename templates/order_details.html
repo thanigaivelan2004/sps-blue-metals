@@ -102,7 +102,6 @@
                     <div class="mt-4 text-center">
                         {% if order[6] == 'Not Paid' %}
                             <p class="text-muted mb-3">Payment pending. Please contact us for payment options.</p>
-                            <a href="#" class="btn btn-success">Make Payment</a>
                         {% endif %}
                         <a href="{{ url_for('user_dashboard') }}" class="btn btn-secondary {% if order[6] == 'Paid' %}ms-0{% else %}ms-2{% endif %}">Back to Dashboard</a>
                     </div>
