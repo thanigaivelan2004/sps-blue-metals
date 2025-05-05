@@ -116,20 +116,35 @@ def order():
         address = request.form['address']
         phone = request.form['phone']
 
-        selected_products = ['20 mm Gravel Stone', '12 mm Gravel Stone', '40 mm Gravel Stone', 'M-SAND']
-        unit_price = 1000
+        # Get the selected products from checkboxes
+        selected_products = request.form.getlist('product')
+        
+        # Define different prices for each product
+        product_prices = {
+            '20 mm Gravel Stone': 500,
+            '12 mm Gravel Stone': 550,
+            '40 mm Gravel Stone': 475,
+            'M-SAND': 600
+        }
+        
         delivery_charge = 1000
 
         items = []
         total_product_price = 0
 
+        # Only process products that were actually selected
         for product in selected_products:
             quantity_str = request.form.get(f'quantity_{product}')
             if quantity_str:
-                quantity = float(quantity_str)
-                if quantity >= 0.5:
-                    items.append((product, quantity))
-                    total_product_price += quantity * unit_price
+                try:
+                    quantity = float(quantity_str)
+                    if quantity >= 0.5:
+                        # Use the correct price for this product
+                        price = product_prices.get(product, 500)  # Default to 500 if product not found
+                        items.append((product, quantity))
+                        total_product_price += quantity * price * 2  # Multiply by 2 because price is per 0.5 unit
+                except ValueError:
+                    pass  # Handle invalid quantity values
 
         if not items:
             flash("Please order at least one product with a minimum of 0.5 units.", "warning")

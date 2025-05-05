@@ -46,6 +46,12 @@
                     <div class="col-12 mb-3">
                         <h4 class="border-bottom pb-2 text-primary">Select Products</h4>
                     </div>
+                    {% set price_info = {
+                        '20 mm Gravel Stone': 500,
+                        '12 mm Gravel Stone': 550,
+                        '40 mm Gravel Stone': 475,
+                        'M-SAND': 600
+                    } %}
                     {% for item in ['20 mm Gravel Stone', '12 mm Gravel Stone', '40 mm Gravel Stone', 'M-SAND'] %}
                     <div class="col-md-6 mb-4">
                         <div class="card h-100 product-card">
@@ -54,6 +60,7 @@
                                     <input class="form-check-input" type="checkbox" name="product" value="{{ item }}" id="product-{{ loop.index }}"
                                            onchange="toggleQuantity('{{ item }}')">
                                     <label class="form-check-label fw-bold fs-5" for="product-{{ loop.index }}">{{ item }}</label>
+                                    <span class="badge bg-primary ms-2">₹{{ price_info[item] }}/0.5 unit</span>
                                 </div>
                                 <div class="quantity-selector d-none" id="quantity-{{ item }}">
                                     <label class="form-label text-muted mb-2">Quantity (units)</label>
@@ -68,7 +75,7 @@
                                         </button>
                                     </div>
                                     <div class="text-end mt-2">
-                                        <span class="text-primary fw-bold">₹<span id="subtotal-{{ item }}">1000</span></span>
+                                        <span class="text-primary fw-bold">₹<span id="subtotal-{{ item }}">{{ price_info[item] * 2 }}</span></span>
                                     </div>
                                 </div>
                             </div>
@@ -133,7 +140,14 @@
 </style>
 
 <script>
-    const unitPrice = 1000;
+    // Define different prices for each product
+    const productPrices = {
+        '20 mm Gravel Stone': 500,
+        '12 mm Gravel Stone': 550,
+        '40 mm Gravel Stone': 475,
+        'M-SAND': 600
+    };
+    
     const deliveryCharge = 1000;
 
     function toggleQuantity(product) {
@@ -163,11 +177,14 @@
         let productsTotal = 0;
         {% for item in ['20 mm Gravel Stone', '12 mm Gravel Stone', '40 mm Gravel Stone', 'M-SAND'] %}
         const checkbox{{ loop.index }} = document.querySelector(`input[value="{{ item }}"]`);
-        const input{{ loop.index }} = document.getElementById('input-{{ item }}');
-        const subtotal{{ loop.index }} = document.getElementById('subtotal-{{ item }}');
+        const input{{ loop.index }} = document.getElementById(`input-{{ item }}`);
+        const subtotal{{ loop.index }} = document.getElementById(`subtotal-{{ item }}`);
         
         if (checkbox{{ loop.index }}.checked) {
-            const itemTotal = parseFloat(input{{ loop.index }}.value) * unitPrice;
+            // Get the price for this specific product
+            const price = productPrices['{{ item }}'];
+            // Calculate based on the quantity (each 0.5 unit costs the specified price)
+            const itemTotal = parseFloat(input{{ loop.index }}.value) * price * 2; // *2 because price is per 0.5 unit
             subtotal{{ loop.index }}.textContent = itemTotal.toFixed(0);
             productsTotal += itemTotal;
         } else {
@@ -187,23 +204,47 @@
             return false;
         }
 
-        const alertBox = document.getElementById('orderNotification');
-        alertBox.style.display = 'block';
-        alertBox.classList.remove('fade-out');
-        alertBox.style.opacity = '1';
-
-        setTimeout(() => {
-            alertBox.classList.add('fade-out');
-        }, 2500); // Start fade after 2.5 sec
-
-        setTimeout(() => {
-            alertBox.style.display = 'none';
-            alertBox.classList.remove('fade-out');
-        }, 3500); // Hide after fade
+        // Also ensure that form doesn't submit if no products have valid quantities
+        let validOrderExists = false;
+        document.querySelectorAll('input[type="checkbox"][name="product"]:checked').forEach(checkbox => {
+            const product = checkbox.value;
+            const quantityInput = document.getElementById(`input-${product}`);
+            if (parseFloat(quantityInput.value) >= 0.5) {
+                validOrderExists = true;
+            }
+        });
+        
+        if (!validOrderExists) {
+            alert("Please ensure at least one selected product has a quantity of 0.5 or more units.");
+            return false;
+        }
 
         return true;
     }
 
-    document.addEventListener('DOMContentLoaded', () => calculateTotal());
+    document.addEventListener('DOMContentLoaded', () => {
+        // Initialize totals
+        calculateTotal();
+        
+        // Check for flash messages
+        const flashMessages = document.querySelectorAll('.alert-success');
+        flashMessages.forEach(message => {
+            if (message.innerText.includes('order has been placed successfully')) {
+                const alertBox = document.getElementById('orderNotification');
+                alertBox.style.display = 'block';
+                alertBox.classList.remove('fade-out');
+                alertBox.style.opacity = '1';
+
+                setTimeout(() => {
+                    alertBox.classList.add('fade-out');
+                }, 2500); // Start fade after 2.5 sec
+
+                setTimeout(() => {
+                    alertBox.style.display = 'none';
+                    alertBox.classList.remove('fade-out');
+                }, 3500); // Hide after fade
+            }
+        });
+    });
 </script>
 {% endblock %}
